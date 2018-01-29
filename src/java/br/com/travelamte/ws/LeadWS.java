@@ -100,5 +100,14 @@ public class LeadWS {
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
+    
+//    {"id":8906,
+//"nome":"Julio Izidoro",
+//"email":"jizidoro@globo.com",
+//"telefone":"(48)98404-4409",
+//"unidade":1,
+//"unidade_desc":"TM - Floripa",
+//"mensagem":"Teste de capturqa",
+//"Urlclient":"www.travelmate.com.br"}
    
 }
