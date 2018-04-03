@@ -14,6 +14,11 @@ public class Leadblog {
     private String nome;
     private String telefone;
     private String email;
+    private String Estado;
+    private String cidade;
+    private String tipoIntercambio;
+    private String detalhe; 
+    
 
     public String getNome() {
         return nome;
@@ -37,6 +42,38 @@ public class Leadblog {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getTipoIntercambio() {
+        return tipoIntercambio;
+    }
+
+    public void setTipoIntercambio(String tipoIntercambio) {
+        this.tipoIntercambio = tipoIntercambio;
+    }
+
+    public String getDetalhe() {
+        return detalhe;
+    }
+
+    public void setDetalhe(String detalhe) {
+        this.detalhe = detalhe;
     }
     
     

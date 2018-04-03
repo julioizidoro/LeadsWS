@@ -149,7 +149,8 @@ public class Capturar {
             lead = new Lead();
             lead.setCliente(cliente.getIdcliente());
             lead.setJaecliente(jaecliente);
-            lead.setNotas("");
+            lead.setNotas(contato.getTipoIntercambio() + " - " + contato.getCidade() + "/" + contato.getEstado() +
+                    " - " + contato.getDetalhe());
             lead.setProdutos(21);
             lead.setSituacao(1);
             lead.setTipocontato(1);
