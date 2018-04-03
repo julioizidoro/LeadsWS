@@ -8,6 +8,7 @@ package br.com.travelamte.ws;
 import br.com.travelamte.controle.Capturar;
 import br.com.travelamte.facade.LeadFacade;
 import br.com.travelamte.model.Lead;
+import br.com.travelamte.model.Leadblog;
 import br.com.travelamte.model.Leads;
 import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
@@ -75,7 +76,7 @@ public class LeadWS {
     
     @POST
     @Consumes("application/json")
-    @Path("lead/capturar/")
+    @Path("lead/fc/")
     public String capturar(String contato){
         try {
             Gson gson = new Gson();
@@ -86,6 +87,27 @@ public class LeadWS {
                 return "null";
             }else {
                 return capturada.getId().toString();
+            }
+            
+        } catch (Exception e) {
+            return e.toString();
+        }
+       // return "final";
+    }
+    
+    @POST
+    @Consumes("application/json")
+    @Path("lead/capturar/")
+    public String capturarblog(String leadblog){
+        try {
+            Gson gson = new Gson();
+            Leadblog capturada = gson.fromJson(leadblog, Leadblog.class);
+            Capturar capturar = new Capturar();
+            capturar.salvarLeadBlog(capturada);
+            if (capturada==null){
+                return "null";
+            }else {
+                return "ok";
             }
             
         } catch (Exception e) {

@@ -16,6 +16,7 @@ import br.com.travelamte.model.Avisos;
 import br.com.travelamte.model.Avisousuario;
 import br.com.travelamte.model.Cliente;
 import br.com.travelamte.model.Lead;
+import br.com.travelamte.model.Leadblog;
 import br.com.travelamte.model.Leadhistorico;
 import br.com.travelamte.model.Leadresponsavel;
 import br.com.travelamte.model.Leads;
@@ -86,7 +87,7 @@ public class Capturar {
         carregarListaResponsavel(contato.getUnidade());
         Unidadenegocio unidade = getUnidade(contato.getUnidade());
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato);
+        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), contato.getUnidade());
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
@@ -125,25 +126,66 @@ public class Capturar {
             lead = leadFacede.salvar(lead);
             listaResponsavelUnidade(unidade.getIdunidadeNegocio(), idUsuario, cliente);
         }else if (lancarHistorico){
-            lancarHistoricoLead(lead, contato);
+            lancarHistoricoLead(lead, contato.getUnidade_desc());
         }       
     }
     
-    public Cliente salvarCliente(Leads contato){
+    public void salvarLeadBlog(Leadblog contato){
+        //carregarParametrosLead();
+        carregarListaResponsavel(6);
+        Unidadenegocio unidade = getUnidade(6);
+        jaecliente = true;
+        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), 6);
+        Lead lead = new Lead();
+        LeadFacade leadFacede = new LeadFacade();
+        boolean lancarHistorico = false;
+        if (jaecliente){
+            lead = leadFacede.getLead(cliente.getIdcliente());
+            lancarHistorico = true;
+        }else{
+            lead = null;
+        }
+        if (lead == null) {
+            lead = new Lead();
+            lead.setCliente(cliente.getIdcliente());
+            lead.setJaecliente(jaecliente);
+            lead.setNotas("");
+            lead.setProdutos(21);
+            lead.setSituacao(1);
+            lead.setTipocontato(1);
+            lead.setPais(5);
+            lead.setPublicidade(13);
+            lead.setUnidadenegocio(6);
+            lead.setMotivocancelamento1(1);
+            lead.setDatarecebimento(new Date());
+            lead.setHorarecebimento(formatarHoraString());
+            lead.setUrlclient("");
+            if (listaLeadResponsavel!=null){
+                lead.setUsuario(listaLeadResponsavel.get(0).getUsuario());
+            }
+            lead.setIdcontrole(0);
+            lead = leadFacede.salvar(lead);
+            listaResponsavelUnidade(6, 212, cliente);
+        }else if (lancarHistorico){
+            lancarHistoricoLead(lead, "Matriz");
+        }       
+    }
+    
+    public Cliente salvarCliente(String nome, String email, String telefone, int unidade){
         ClienteFacade clienteFacade = new ClienteFacade();
-        Cliente cliente = clienteFacade.consultarEmail(contato.getEmail());
+        Cliente cliente = clienteFacade.consultarEmail(email);
         if (cliente==null){
             jaecliente=false;
             cliente = new Cliente();
-            cliente.setNome(contato.getNome());
-            cliente.setEmail(contato.getEmail());
+            cliente.setNome(nome);
+            cliente.setEmail(email);
             cliente.setDataCadastro(new Date());
-            cliente.setFoneCelular(formatTelefone(contato.getTelefone()));
+            cliente.setFoneCelular(formatTelefone(telefone));
             cliente.setTipoCliente("FollowUp");
             cliente.setPublicidade(11);
-            if (contato.getUnidade()==0){
+            if (unidade==0){
                 cliente.setUnidadenegocio(6);
-            }else cliente.setUnidadenegocio(contato.getUnidade());
+            }else cliente.setUnidadenegocio(unidade);
             
             cliente = clienteFacade.salvar(cliente);
         }
@@ -172,11 +214,11 @@ public class Capturar {
 	return formattedDate;
     }
     
-    public void lancarHistoricoLead(Lead lead, Leads contato){
+    public void lancarHistoricoLead(Lead lead, String unidadeDescricao){
         Leadhistorico historico = new Leadhistorico();
         historico.setCliente(lead.getCliente());
         historico.setDatahistorico(new Date());
-        historico.setHistorico("Nova solictação do cliente via fale conosco para unidade " + contato.getUnidade_desc());
+        historico.setHistorico("Nova solictação do cliente via fale conosco para unidade " + unidadeDescricao);
         historico.setTipocontato(1);
         HistoricoFacade historicoFacade = new HistoricoFacade();
         historicoFacade.salvar(historico);
