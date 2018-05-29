@@ -18,11 +18,12 @@ public class HistoricoDao {
     
     public Leadhistorico salvar(Leadhistorico historico) {
         EntityManager manager;
-        manager = ConexaoSingleton.getInstanceSysTM();
+        manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         historico = manager.merge(historico);
         tx.commit();
+        manager.close();
         return historico;
     }
     

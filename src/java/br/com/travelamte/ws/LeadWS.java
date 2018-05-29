@@ -25,7 +25,7 @@ import javax.ws.rs.PathParam;
  *
  * @author Wolverine
  */
-@Path("leadws")
+@Path("")
 public class LeadWS {
 
     @Context
@@ -49,7 +49,7 @@ public class LeadWS {
     
     @GET
     @Produces("application/json")
-    @Path("lead/get/{id}")
+    @Path("get/{id}")
     public String getLeads(@PathParam("id") int id){
         LeadFacade leadFacade = new LeadFacade();
         Lead lead = leadFacade.getLead(id);
@@ -59,7 +59,7 @@ public class LeadWS {
     
     @GET
     @Produces("application/json")
-    @Path("lead/getJson")
+    @Path("/getJson")
     public String getJsonCotnato(){
         Leads contato = new Leads();
         contato.setId(11205);
@@ -76,7 +76,7 @@ public class LeadWS {
     
     @POST
     @Consumes("application/json")
-    @Path("lead/fc/")
+    @Path("fc/")
     public String capturar(String contato){
         try {
             Gson gson = new Gson();
@@ -97,7 +97,7 @@ public class LeadWS {
     
     @POST
     @Consumes("application/json")
-    @Path("lead/capturar/")
+    @Path("capturar/")
     public String capturarblog(String leadblog){
         try {
             Gson gson = new Gson();
@@ -105,7 +105,7 @@ public class LeadWS {
             Capturar capturar = new Capturar();
             capturar.salvarLeadBlog(capturada);
             if (capturada==null){
-                return "null";
+                return "ERRO";
             }else {
                 return "ok";
             }

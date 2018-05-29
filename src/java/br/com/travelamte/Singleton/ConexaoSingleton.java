@@ -18,36 +18,19 @@ import javax.persistence.Persistence;
 public class ConexaoSingleton {
     
     
-    private static EntityManagerFactory emfSysTM = null;
-    private static EntityManager managerSysTM= null;
-    private static EntityManagerFactory emfLead = null;
-    private static EntityManager managerLead= null;
+    private static EntityManager manager;
+    private static EntityManager entityManager;
    
     
     
-    public static EntityManager getInstanceSysTM() {
-//        emfSysTM = null;
-//        if (managerSysTM!=null){
-//            if (managerSysTM.isOpen()){
-//                managerSysTM.close();
-//            }
-//        }
-        if (emfSysTM == null) {
-            Map mapa = new HashMap();
-            mapa.put("hibernate.connection.url", "jdbc:mysql://localhost:8081/systm");
-            mapa.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-            mapa.put("hibernate.connection.password", "simples");
-            mapa.put("hibernate.connection.username", "root");
-            mapa.put("hibernate.cache.provider_class", "org.hibernate.cache.NoCacheProvider");
-            mapa.put("hibernate.show_sql", "true");
-            mapa.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-            emfSysTM = Persistence.createEntityManagerFactory("systmPU", mapa);
-            managerSysTM = emfSysTM.createEntityManager();
+    public static EntityManager getConnection() {
+        EntityManagerFactory emf = null;
+        manager = null;
+        emf = Persistence.createEntityManagerFactory("systmPU");
+        manager = emf.createEntityManager();
+        if (!manager.isOpen()) {
+            System.out.print("Conexão fechada");
         }
-        if (!managerSysTM.isOpen()) {
-            System.out.print("Verifique conexão com banco de dados SysTM");
-        }
-        return managerSysTM;
+        return manager;
     }
-   
 }

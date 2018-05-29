@@ -18,20 +18,23 @@ import javax.persistence.Query;
 public class ParametrosLeadDao {
     
     public Parametroslead get(){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         Query q = manager.createQuery("select p from Parametroslead p");
+        Parametroslead parametroslead = null;
         if (q.getResultList().size()>0){
-            return (Parametroslead) q.getResultList().get(0);
+            parametroslead = (Parametroslead) q.getResultList().get(0);
         }
-        return null;
+        manager.close();
+        return parametroslead;
     }
     
     public Parametroslead salvar(Parametroslead parametrosLead) {
-    	EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+    	EntityManager manager = ConexaoSingleton.getConnection();
 	EntityTransaction tx = manager.getTransaction();
 	tx.begin();
         parametrosLead = manager.merge(parametrosLead);
         tx.commit();
+        manager.close();
         return parametrosLead;
     }
 }

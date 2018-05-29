@@ -19,16 +19,17 @@ public class LeadDao {
     
     public Lead salvar(Lead lead) {
         EntityManager manager;
-        manager = ConexaoSingleton.getInstanceSysTM();
+        manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         lead = manager.merge(lead);
         tx.commit();
+        manager.close();
         return lead;
     }
     
     public Lead getLead(int idCliente){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         Query q = manager.createQuery("select l from Lead l where l.cliente=" + idCliente +
@@ -38,6 +39,7 @@ public class LeadDao {
             lead = (Lead) q.getResultList().get(0);
         }
         tx.commit();
+        manager.close();
         return lead;
     }
 }

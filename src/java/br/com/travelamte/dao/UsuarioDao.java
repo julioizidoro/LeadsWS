@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class UsuarioDao {
     
     public List<Usuario> consultar(int unidade) {
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         Query q = manager.createQuery("SELECT u FROM Usuario u WHERE u.recebeleadautomatica=1 and u.unidadenegocio=" + unidade );
@@ -28,15 +28,17 @@ public class UsuarioDao {
             listaUsuario = q.getResultList();
         }
         tx.commit();
+        manager.close();
         return listaUsuario;
     }
     
     public void salvar(Usuario usuario){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         manager.merge(usuario);
         tx.commit();
+        manager.close();
     }
     
 }

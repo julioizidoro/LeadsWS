@@ -18,10 +18,11 @@ public class LeadControleDao {
     
     public void salvar(Leadcontrole leadControle){
         EntityManager manager;
-        manager = ConexaoSingleton.getInstanceSysTM();
+        manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         leadControle = manager.merge(leadControle);
+        manager.close();
         tx.commit();
     }
     

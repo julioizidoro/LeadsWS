@@ -19,21 +19,23 @@ public class AvisosDao {
     
     public Avisos salvar(Avisos aviso) {
         EntityManager manager;
-        manager = ConexaoSingleton.getInstanceSysTM();
+        manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         aviso = manager.merge(aviso);
         tx.commit();
+        manager.close();
         return aviso;
     }
     
     public Avisousuario salvar(Avisousuario avisoUsuario) {
         EntityManager manager;
-        manager = ConexaoSingleton.getInstanceSysTM();
+        manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         avisoUsuario = manager.merge(avisoUsuario);
         tx.commit();
+        manager.close();
         return avisoUsuario;
     }
     

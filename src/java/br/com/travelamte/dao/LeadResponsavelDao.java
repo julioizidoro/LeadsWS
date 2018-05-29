@@ -18,12 +18,13 @@ import javax.persistence.Query;
 public class LeadResponsavelDao {
     
     public List<Leadresponsavel> list(int unidade)  {
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
        Query q = manager.createQuery("select l from Leadresponsavel l where l.unidadenegocio=" + unidade);
         List<Leadresponsavel> lista = null;
         if (q.getResultList().size() > 0) {
             lista = q.getResultList();
         }
+        manager.close();
         return lista;
     }
     

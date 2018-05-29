@@ -18,31 +18,34 @@ import javax.persistence.Query;
 public class UnidadeDao {
     
     public Unidadenegocio getUsuarioResponsavel(int idUnidade){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         Query q = manager.createQuery("select u from Unidadenegocio u where u.idunidadeNegocio=" + idUnidade);
         Unidadenegocio unidade = null;
         if (q.getResultList().size()>0){
             unidade = (Unidadenegocio) q.getResultList().get(0);
         }
+        manager.close();
         return unidade;
     }
     
     public Unidadenegocio getUnidade(int idUnidade){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         Query q = manager.createQuery("select u from Unidadenegocio u where u.idunidadeNegocio=" +  idUnidade);
         Unidadenegocio unidade = null;
         if (q.getResultList().size()>0){
             unidade = (Unidadenegocio) q.getResultList().get(0);
         }
+        manager.close();
         return unidade;
     }
     
     public void salvar(Unidadenegocio unidade){
-        EntityManager manager = ConexaoSingleton.getInstanceSysTM();
+        EntityManager manager = ConexaoSingleton.getConnection();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
         manager.merge(unidade);
         tx.commit();
+        manager.close();
     }
     
 }

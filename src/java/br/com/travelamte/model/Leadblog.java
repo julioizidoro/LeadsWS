@@ -12,9 +12,9 @@ package br.com.travelamte.model;
 public class Leadblog {
     
     private String nome;
-    private String telefone;
     private String email;
-    private String Estado;
+    private String telefone;
+    private String estado;
     private String cidade;
     private String tipoIntercambio;
     private String detalhe; 
@@ -45,11 +45,11 @@ public class Leadblog {
     }
 
     public String getEstado() {
-        return Estado;
+        return estado;
     }
 
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getCidade() {
