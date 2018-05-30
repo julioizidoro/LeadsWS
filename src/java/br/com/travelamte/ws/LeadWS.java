@@ -103,11 +103,13 @@ public class LeadWS {
             Gson gson = new Gson();
             Leadblog capturada = gson.fromJson(leadblog, Leadblog.class);
             Capturar capturar = new Capturar();
-            capturar.salvarLeadBlog(capturada);
-            if (capturada==null){
+            boolean resultado = false;
+            Lead lead = capturar.salvarLeadBlog(capturada);
+            if (lead==null){
                 return "ERRO";
             }else {
-                return "ok";
+                return "id Leda = " + lead.getIdlead() + "  idCliente = " + lead.getCliente() + "  nome : " + capturada.getNome() +
+                        "  e-mail : " + capturada.getEmail();
             }
             
         } catch (Exception e) {

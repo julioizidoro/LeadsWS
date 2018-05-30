@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author Wolverine
  */
-@javax.ws.rs.ApplicationPath("systm")
+@javax.ws.rs.ApplicationPath("lead")
 public class ApplicationConfig extends Application {
 
     @Override

@@ -5,6 +5,8 @@
  */
 package br.com.travelamte.model;
 
+import java.util.List;
+
 /**
  *
  * @author julioizidoro
@@ -16,6 +18,11 @@ public class Leadblog {
     private String telefone;
     private String estado;
     private String cidade;
+    private List<String> listaPais;
+    private String idade;
+    private String objetivo;
+    private String duracao;
+    private String quandoviajar;
     private String tipoIntercambio;
     private String detalhe; 
     
@@ -74,6 +81,46 @@ public class Leadblog {
 
     public void setDetalhe(String detalhe) {
         this.detalhe = detalhe;
+    }
+
+    public List<String> getListaPais() {
+        return listaPais;
+    }
+
+    public void setListaPais(List<String> listaPais) {
+        this.listaPais = listaPais;
+    }
+
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
+    }
+
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public String getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(String duracao) {
+        this.duracao = duracao;
+    }
+
+    public String getQuandoviajar() {
+        return quandoviajar;
+    }
+
+    public void setQuandoviajar(String quandoviajar) {
+        this.quandoviajar = quandoviajar;
     }
     
     

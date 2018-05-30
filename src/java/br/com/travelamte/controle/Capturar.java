@@ -87,7 +87,7 @@ public class Capturar {
         carregarListaResponsavel(contato.getUnidade());
         Unidadenegocio unidade = getUnidade(contato.getUnidade());
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), contato.getUnidade());
+        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), contato.getUnidade(), 11, "FC");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
@@ -130,12 +130,12 @@ public class Capturar {
         }       
     }
     
-    public void salvarLeadBlog(Leadblog contato){
+    public Lead salvarLeadBlog(Leadblog contato){
         //carregarParametrosLead();
         carregarListaResponsavel(6);
         Unidadenegocio unidade = getUnidade(6);
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), 6);
+        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), 6, 13, "blog");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
@@ -149,8 +149,24 @@ public class Capturar {
             lead = new Lead();
             lead.setCliente(cliente.getIdcliente());
             lead.setJaecliente(jaecliente);
-            lead.setNotas(contato.getTipoIntercambio() + " - " + contato.getCidade() + "/" + contato.getEstado() +
-                    " - " + contato.getDetalhe());
+            String nota = "Cidade : " + contato.getCidade() + "/" + contato.getEstado() + "\b\n";
+            nota = nota + "Destinos : ";
+            if (contato.getListaPais()!=null){
+                for(int i=0;i<contato.getListaPais().size();i++){
+                    nota = nota + contato.getListaPais().get(i) + " - ";
+                }
+            }
+            nota = nota + "\b\n";
+            nota = nota + "Tipo de intercâmbio : " + contato.getTipoIntercambio() + "\b\n";
+            nota = nota + "Idade do intercambista : " + contato.getIdade() + "\b\n";
+            nota = nota + "Objetivo : " + contato.getObjetivo() + "\b\n";
+            nota = nota + "Duração : " + contato.getDuracao() + "\b\n";
+            nota = nota + "Quando pretende viajar : " + contato.getQuandoviajar() + "\b\n";
+            nota = nota + " Detalhe :" + contato.getDetalhe() + "\b\n";
+            
+            
+            
+            lead.setNotas(nota);
             lead.setProdutos(21);
             lead.setSituacao(1);
             lead.setTipocontato(1);
@@ -169,10 +185,11 @@ public class Capturar {
             listaResponsavelUnidade(6, 212, cliente);
         }else if (lancarHistorico){
             lancarHistoricoLead(lead, "Matriz");
-        }       
+        }    
+        return lead;
     }
     
-    public Cliente salvarCliente(String nome, String email, String telefone, int unidade){
+    public Cliente salvarCliente(String nome, String email, String telefone, int unidade, int idPrublicidade, String tipoFone){
         ClienteFacade clienteFacade = new ClienteFacade();
         Cliente cliente = clienteFacade.consultarEmail(email);
         if (cliente==null){
@@ -181,9 +198,14 @@ public class Capturar {
             cliente.setNome(nome);
             cliente.setEmail(email);
             cliente.setDataCadastro(new Date());
-            cliente.setFoneCelular(formatTelefone(telefone));
+            if (tipoFone.equalsIgnoreCase("FC")){
+                cliente.setFoneCelular(formatTelefoneFC(telefone));
+            }else {
+                cliente.setFoneCelular(formatTelefoneBlog(telefone));
+            }
+            
             cliente.setTipoCliente("FollowUp");
-            cliente.setPublicidade(11);
+            cliente.setPublicidade(idPrublicidade);
             if (unidade==0){
                 cliente.setUnidadenegocio(6);
             }else cliente.setUnidadenegocio(unidade);
@@ -193,7 +215,7 @@ public class Capturar {
         return cliente;
     } 
     
-    public String formatTelefone(String fone){
+    public String formatTelefoneFC(String fone){
         String novoFone ="";
         int tamanho = fone.length();
         for(int i=0;i<tamanho;i++){
@@ -206,6 +228,13 @@ public class Capturar {
                 }
             }
         }
+        return novoFone;
+    }
+    
+    public String formatTelefoneBlog(String fone){
+        String novoFone ="(" + fone.substring(0, 2);
+        novoFone = novoFone + ")" + fone.substring(2, 7);
+        novoFone = novoFone + "-" + fone.substring(7, 11);
         return novoFone;
     }
     
