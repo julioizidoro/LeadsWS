@@ -150,12 +150,12 @@ public class Capturar {
             lead.setCliente(cliente.getIdcliente());
             lead.setJaecliente(jaecliente);
             String nota = "Cidade : " + contato.getCidade() + "/" + contato.getEstado() + "\b\n";
-            nota = nota + "Destinos : ";
-            if (contato.getListaPais()!=null){
-                for(int i=0;i<contato.getListaPais().size();i++){
-                    nota = nota + contato.getListaPais().get(i) + " - ";
-                }
-            }
+   //         nota = nota + "Destinos : ";
+            //if (contato.getListaPais()!=null){
+      //          for(int i=0;i<contato.getListaPais().size();i++){
+        //            nota = nota + contato.getListaPais().get(i) + " - ";
+     //           }
+     //       }
             nota = nota + "\b\n";
             nota = nota + "Tipo de intercâmbio : " + contato.getTipoIntercambio() + "\b\n";
             nota = nota + "Idade do intercambista : " + contato.getIdade() + "\b\n";

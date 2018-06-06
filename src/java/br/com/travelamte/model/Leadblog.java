@@ -18,7 +18,7 @@ public class Leadblog {
     private String telefone;
     private String estado;
     private String cidade;
-    private List<String> listaPais;
+    //private List<String> listaPais;
     private String idade;
     private String objetivo;
     private String duracao;
@@ -83,14 +83,7 @@ public class Leadblog {
         this.detalhe = detalhe;
     }
 
-    public List<String> getListaPais() {
-        return listaPais;
-    }
-
-    public void setListaPais(List<String> listaPais) {
-        this.listaPais = listaPais;
-    }
-
+   
     public String getIdade() {
         return idade;
     }
