@@ -20,7 +20,6 @@ import br.com.travelamte.model.Leadblog;
 import br.com.travelamte.model.Leadhistorico;
 import br.com.travelamte.model.Leadresponsavel;
 import br.com.travelamte.model.Leads;
-import br.com.travelamte.model.Parametroslead;
 import br.com.travelamte.model.Unidadenegocio;
 import br.com.travelamte.model.Usuario;
 import java.text.DateFormat;
@@ -150,12 +149,12 @@ public class Capturar {
             lead.setCliente(cliente.getIdcliente());
             lead.setJaecliente(jaecliente);
             String nota = "Cidade : " + contato.getCidade() + "/" + contato.getEstado() + "\b\n";
-   //         nota = nota + "Destinos : ";
-            //if (contato.getListaPais()!=null){
-      //          for(int i=0;i<contato.getListaPais().size();i++){
-        //            nota = nota + contato.getListaPais().get(i) + " - ";
-     //           }
-     //       }
+            nota = nota + "Destinos : ";
+            if (contato.getListaPais()!=null){
+                for(int i=0;i<contato.getListaPais().size();i++){
+                    nota = nota + contato.getListaPais().get(i) + " - ";
+                }
+            }
             nota = nota + "\b\n";
             nota = nota + "Tipo de intercâmbio : " + contato.getTipoIntercambio() + "\b\n";
             nota = nota + "Idade do intercambista : " + contato.getIdade() + "\b\n";
@@ -231,11 +230,14 @@ public class Capturar {
         return novoFone;
     }
     
-    public String formatTelefoneBlog(String fone){
-        String novoFone ="(" + fone.substring(0, 2);
-        novoFone = novoFone + ")" + fone.substring(2, 7);
-        novoFone = novoFone + "-" + fone.substring(7, 11);
-        return novoFone;
+    public String formatTelefoneBlog(String fone) {
+        if (fone.length() == 11) {
+            String novoFone = "(" + fone.substring(0, 2);
+            novoFone = novoFone + ")" + fone.substring(2, 7);
+            novoFone = novoFone + "-" + fone.substring(7, 11);
+            return novoFone;
+        }
+        return "(00)00000-0000";
     }
     
     public String formatarHoraString() {
