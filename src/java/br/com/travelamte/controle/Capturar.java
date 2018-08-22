@@ -266,7 +266,7 @@ public class Capturar {
             }else if (tipoFone.equalsIgnoreCase("Blog")){
                 cliente.setFoneCelular(formatTelefoneBlog(telefone));
             }else if (tipoFone.equalsIgnoreCase("Bot")){
-                cliente.setFoneCelular(telefone);
+                cliente.setFoneCelular(formatTelefoneBot(telefone));
             }
             
             cliente.setTipoCliente("FollowUp");
@@ -302,6 +302,20 @@ public class Capturar {
             novoFone = novoFone + ")" + fone.substring(2, 7);
             novoFone = novoFone + "-" + fone.substring(7, 11);
             return novoFone;
+        }
+        return "(00)00000-0000";
+    }
+    
+    public String formatTelefoneBot(String fone) {
+        String novoFone="";
+        if (fone.length()==14){
+            fone = fone.substring(0, 4);
+            novoFone = novoFone  + fone.substring(5, 14);
+            return novoFone;
+        }else if (fone.length()==15){
+            fone = fone.substring(0, 4);
+            novoFone = novoFone  + fone.substring(5, 15);
+            return novoFone;   
         }
         return "(00)00000-0000";
     }
