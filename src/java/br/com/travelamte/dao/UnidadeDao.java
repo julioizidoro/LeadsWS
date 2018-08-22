@@ -50,7 +50,7 @@ public class UnidadeDao {
     
     public Unidadenegocio getUnidade(String nome){
         EntityManager manager = ConexaoSingleton.getConnection();
-        Query q = manager.createQuery("select u from Unidadenegocio u where u.nomesw='" +  nome + "");
+        Query q = manager.createQuery("select u from Unidadenegocio u where u.nomews='" +  nome + "'");
         Unidadenegocio unidade = null;
         if (q.getResultList().size()>0){
             unidade = (Unidadenegocio) q.getResultList().get(0);

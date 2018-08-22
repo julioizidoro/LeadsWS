@@ -18,7 +18,7 @@ public class PublicidadeDao {
     
     public Publicidade getPublicidade(String nome) {
     	EntityManager manager = ConexaoSingleton.getConnection();
-        Query q = manager.createQuery("select p from Publicidade  p WHERE p.mostrar=1 and p.descricao='" + nome + "' order by p.descricao");
+        Query q = manager.createQuery("select p from Publicidade  p WHERE p.descricao='" + nome + "' order by p.descricao");
         Publicidade publicidade = null;
         if (q.getResultList().size()>0){
             publicidade = (Publicidade) q.getResultList().get(0);
