@@ -39,6 +39,9 @@ public class Unidadenegocio implements Serializable {
     private int usuarioleadautomatica;
     @Column(name = "situacao")
     private boolean situacao;
+    @Column(name = "nomews")
+    private String nomews;
+    
     
     
     
@@ -94,6 +97,15 @@ public class Unidadenegocio implements Serializable {
         this.situacao = situacao;
     }
 
+    public String getNomews() {
+        return nomews;
+    }
+
+    public void setNomews(String nomews) {
+        this.nomews = nomews;
+    }
+
+   
     
 
     @Override

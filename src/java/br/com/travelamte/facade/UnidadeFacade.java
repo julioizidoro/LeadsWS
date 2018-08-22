@@ -29,4 +29,9 @@ public class UnidadeFacade {
         unidadeDao.salvar(unidade);
     }
     
+    public Unidadenegocio getUnidade(String nome){
+         UnidadeDao unidadeDao = new UnidadeDao();
+         return unidadeDao.getUnidade(nome);
+    }
+    
 }

@@ -10,6 +10,8 @@ import br.com.travelamte.facade.ClienteFacade;
 import br.com.travelamte.facade.HistoricoFacade;
 import br.com.travelamte.facade.LeadFacade;
 import br.com.travelamte.facade.LeadResponsavelFacade;
+import br.com.travelamte.facade.PaisFacade;
+import br.com.travelamte.facade.PublicidadeFacade;
 import br.com.travelamte.facade.UnidadeFacade;
 import br.com.travelamte.facade.UsuarioFacade;
 import br.com.travelamte.model.Avisos;
@@ -17,9 +19,12 @@ import br.com.travelamte.model.Avisousuario;
 import br.com.travelamte.model.Cliente;
 import br.com.travelamte.model.Lead;
 import br.com.travelamte.model.Leadblog;
+import br.com.travelamte.model.Leadbot;
 import br.com.travelamte.model.Leadhistorico;
 import br.com.travelamte.model.Leadresponsavel;
 import br.com.travelamte.model.Leads;
+import br.com.travelamte.model.Pais;
+import br.com.travelamte.model.Publicidade;
 import br.com.travelamte.model.Unidadenegocio;
 import br.com.travelamte.model.Usuario;
 import java.text.DateFormat;
@@ -188,6 +193,65 @@ public class Capturar {
         return lead;
     }
     
+    public Lead salvarLeadBot(Leadbot contato){
+        Unidadenegocio unidade = null;
+        if (contato.getUnidadetravelmate()!=null){
+            if (contato.getUnidadetravelmate().length()>0){
+                UnidadeFacade unidadeFacade = new UnidadeFacade();
+                unidade = unidadeFacade.getUnidade(contato.getUnidadetravelmate());
+            }
+        }
+        if (unidade!=null){
+            carregarListaResponsavel(unidade.getIdunidadeNegocio());
+        }else {
+            UnidadeFacade unidadeFacade = new UnidadeFacade();
+            unidade = unidadeFacade.getUnidade(6);
+            carregarListaResponsavel(6);
+        }
+        jaecliente = true;
+        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), 6, 13, "Bot");
+        Lead lead = new Lead();
+        LeadFacade leadFacede = new LeadFacade();
+        boolean lancarHistorico = false;
+        if (jaecliente){
+            lead = leadFacede.getLead(cliente.getIdcliente());
+            lancarHistorico = true;
+        }else{
+            lead = null;
+        }
+        if (lead == null) {
+            lead = new Lead();
+            lead.setCliente(cliente.getIdcliente());
+            lead.setJaecliente(jaecliente);
+            if (contato.getMotivodaviagem().equalsIgnoreCase("Estudar")){
+                lead = motivoViagemEstudar(lead, contato);
+            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalho")){
+                lead = motivoViagemTrabalho(lead, contato);
+            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Estudar e Trabalhar")){
+                lead = motivoViagemTrabalho(lead, contato);
+            }
+            lead.setNotas(contato.getDuvida());
+            lead.setSituacao(1);
+            lead.setTipocontato(1);
+            
+            lead.setPublicidade(getPublicidade(contato.getComoficousabendo()));
+            lead.setUnidadenegocio(unidade.getIdunidadeNegocio());
+            lead.setMotivocancelamento1(1);
+            lead.setDatarecebimento(new Date());
+            lead.setHorarecebimento(formatarHoraString());
+            lead.setUrlclient("bot");
+            if (listaLeadResponsavel!=null){
+                lead.setUsuario(listaLeadResponsavel.get(0).getUsuario());
+            }
+            lead.setIdcontrole(0);
+            lead = leadFacede.salvar(lead);
+            listaResponsavelUnidade(unidade.getIdunidadeNegocio(), 0, cliente);
+        }else if (lancarHistorico){
+            lancarHistoricoLead(lead, contato.getUnidadetravelmate());
+        }    
+        return lead;
+    }
+    
     public Cliente salvarCliente(String nome, String email, String telefone, int unidade, int idPrublicidade, String tipoFone){
         ClienteFacade clienteFacade = new ClienteFacade();
         Cliente cliente = clienteFacade.consultarEmail(email);
@@ -199,8 +263,10 @@ public class Capturar {
             cliente.setDataCadastro(new Date());
             if (tipoFone.equalsIgnoreCase("FC")){
                 cliente.setFoneCelular(formatTelefoneFC(telefone));
-            }else {
+            }else if (tipoFone.equalsIgnoreCase("Blog")){
                 cliente.setFoneCelular(formatTelefoneBlog(telefone));
+            }else if (tipoFone.equalsIgnoreCase("Bot")){
+                cliente.setFoneCelular(telefone);
             }
             
             cliente.setTipoCliente("FollowUp");
@@ -293,4 +359,66 @@ public class Capturar {
         avisosFacade.salvar(avisoUsuario);
     }
     
+    public int getPais(String nomePais){
+        PaisFacade paisFacade = new PaisFacade();
+        Pais pais = paisFacade.consultarNome(nomePais);
+        if (pais!=null){
+            return pais.getIdpais();
+        }else return 0;
+    }
+    
+    public Lead motivoViagemTrabalho(Lead lead, Leadbot contato){
+        int idPais = getPais(contato.getDestinotrabalho());
+        if (idPais>0){
+            lead.setPais(idPais);
+        }else lead.setPais(5);
+        if (contato.getCursos().equalsIgnoreCase("Au pair")){
+            lead.setProdutos(9);
+        }else if (contato.getCursos().equalsIgnoreCase("Work and Travel")){
+            lead.setProdutos(10);
+        }if (contato.getCursos().equalsIgnoreCase("Voluntariado")){
+            lead.setProdutos(16);
+        }else {
+            lead.setProdutos(21);
+        }
+        return lead;
+        
+    }
+    
+    public Lead motivoViagemEstudoTrabalho(Lead lead, Leadbot contato){
+        int idPais = getPais(contato.getDestinotrabalho());
+        if (idPais>0){
+            lead.setPais(idPais);
+        }else lead.setPais(5);
+        if (contato.getCursos().equalsIgnoreCase("Au pair")){
+            lead.setProdutos(9);
+        }else if (contato.getCursos().equalsIgnoreCase("Work and Travel")){
+            lead.setProdutos(10);
+        }if (contato.getCursos().equalsIgnoreCase("Voluntariado")){
+            lead.setProdutos(16);
+        }else {
+            lead.setProdutos(21);
+        }
+        return lead;
+        
+    }
+    
+    public Lead motivoViagemEstudar(Lead lead, Leadbot contato){
+        int idPais = getPais(contato.getDestinopaisesttrab());
+        if (idPais>0){
+            lead.setPais(idPais);
+        }else lead.setPais(5);
+        lead.setProdutos(21);
+        return lead;
+        
+    }
+    
+    public int getPublicidade(String nome){
+        PublicidadeFacade publicidadeFacade = new PublicidadeFacade();
+        Publicidade publicidade = new Publicidade();
+        publicidade = publicidadeFacade.getPublicidade(nome);
+        if (publicidade!=null){
+            return publicidade.getIdpublicidade();
+        }else return 1;
+    }
 }

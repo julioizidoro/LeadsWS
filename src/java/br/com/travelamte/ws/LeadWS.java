@@ -9,6 +9,7 @@ import br.com.travelamte.controle.Capturar;
 import br.com.travelamte.facade.LeadFacade;
 import br.com.travelamte.model.Lead;
 import br.com.travelamte.model.Leadblog;
+import br.com.travelamte.model.Leadbot;
 import br.com.travelamte.model.Leads;
 import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
@@ -57,27 +58,12 @@ public class LeadWS {
         return gson.toJson(lead);
     }
     
-    @GET
-    @Produces("application/json")
-    @Path("/getJson")
-    public String getJsonCotnato(){
-        Leads contato = new Leads();
-        contato.setId(11205);
-        contato.setNome("SHIRLEY MARQUES CAPITA");
-        contato.setEmail("capitashirley01@outlook.com");
-        contato.setTelefone("(35) 9991-81908");
-        contato.setUnidade(61);
-        contato.setMensagem("Boa tarde, gostaria de mais informaçoes sobre esse pacote, se tem em junho de 2018. Pretendo ir com minha filha e mãe idosa. Como fica o pacote?\n" +" obrigada");
-        contato.setUnidade_desc("MG - Andradas");
-        contato.setUrlclient("http://travelmate.com.br/viajar/curitiba-train/");
-        Gson gson = new Gson();
-        return gson.toJson(contato);
-    }
+  
     
     @POST
     @Consumes("application/json")
     @Path("fc/")
-    public String capturar(String contato){
+    public String capturarFC(String contato){
         try {
             Gson gson = new Gson();
             Leads capturada = gson.fromJson(contato, Leads.class);
@@ -97,8 +83,8 @@ public class LeadWS {
     
     @POST
     @Consumes("application/json")
-    @Path("capturar/")
-    public String capturarblog(String leadblog){
+    @Path("blog/")
+    public String capturarBlog(String leadblog){
         try {
             Gson gson = new Gson();
             Leadblog capturada = gson.fromJson(leadblog, Leadblog.class);
@@ -118,20 +104,31 @@ public class LeadWS {
        // return "final";
     }
     
+    @POST
+    @Consumes("application/json")
+    @Path("bot/")
+    public String capturarBot(String leadbot){
+        try {
+            Gson gson = new Gson();
+            Leadbot capturada = gson.fromJson(leadbot, Leadbot.class);
+            Capturar capturar = new Capturar();
+            boolean resultado = false;
+            Lead lead = capturar.salvarLeadBot(capturada);
+            if (lead==null){
+                return "ERRO";
+            }else {
+                return "id Leda = " + lead.getIdlead() + "  idCliente = " + lead.getCliente() + "  nome : " + capturada.getNome() +
+                        "  e-mail : " + capturada.getEmail();
+            }
+            
+        } catch (Exception e) {
+            return e.toString();
+        }
+       // return "final";
+    }
+    
     
 
-    /**
-     * PUT method for updating or creating an instance of GenericResource
-     * @param content representation for the resource
-     */
-    
-//    {"id":8906,
-//"nome":"Julio Izidoro",
-//"email":"jizidoro@globo.com",
-//"telefone":"(48)98404-4409",
-//"unidade":1,
-//"unidade_desc":"TM - Floripa",
-//"mensagem":"Teste de capturqa",
-//"Urlclient":"www.travelmate.com.br"}
+  
    
 }

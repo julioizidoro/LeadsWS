@@ -10,16 +10,17 @@
     <class>br.com.travelamte.model.Leadcontrole</class>
     <class>br.com.travelamte.model.Leadhistorico</class>
     <class>br.com.travelamte.model.Leadresponsavel</class>
-    <class>br.com.travelamte.model.Parametroslead</class>
     <class>br.com.travelamte.model.Unidadenegocio</class>
     <class>br.com.travelamte.model.Usuario</class>
+    <class>br.com.travelamte.model.Pais</class>
+    <class>br.com.travelamte.model.Publicidade</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://tmmysql.cxjytqucztmb.us-east-1.rds.amazonaws.com:3306/systm?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="master"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:localhost:3306/systm?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="Travel2018#"/>
+      <property name="javax.persistence.jdbc.password" value="simples"/>
     </properties>
   </persistence-unit>
 </persistence>

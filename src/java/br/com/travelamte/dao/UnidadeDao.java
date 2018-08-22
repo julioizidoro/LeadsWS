@@ -48,4 +48,15 @@ public class UnidadeDao {
         manager.close();
     }
     
+    public Unidadenegocio getUnidade(String nome){
+        EntityManager manager = ConexaoSingleton.getConnection();
+        Query q = manager.createQuery("select u from Unidadenegocio u where u.nomesw='" +  nome + "");
+        Unidadenegocio unidade = null;
+        if (q.getResultList().size()>0){
+            unidade = (Unidadenegocio) q.getResultList().get(0);
+        }
+        manager.close();
+        return unidade;
+    }
+    
 }
