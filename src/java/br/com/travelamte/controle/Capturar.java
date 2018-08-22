@@ -225,7 +225,7 @@ public class Capturar {
             lead.setJaecliente(jaecliente);
             if (contato.getMotivodaviagem().equalsIgnoreCase("Estudar")){
                 lead = motivoViagemEstudar(lead, contato);
-            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalho")){
+            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Estudar e Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
@@ -367,6 +367,23 @@ public class Capturar {
         }else return 0;
     }
     
+    public Lead motivoViagemEstudar(Lead lead, Leadbot contato){
+        int idPais = getPais(contato.getDestinotrabalho());
+        if (idPais>0){
+            lead.setPais(idPais);
+        }else lead.setPais(5);
+        if (contato.getCursos().equalsIgnoreCase("Cursos de idioma")){
+            lead.setProdutos(1);
+        }else if (contato.getCursos().equalsIgnoreCase("Férias Teen")){
+            lead.setProdutos(5);
+        }if (contato.getCursos().equalsIgnoreCase("High School")){
+            lead.setProdutos(4);
+        }else if (contato.getCursos().equalsIgnoreCase("Higher Education")){
+            lead.setProdutos(22);
+        }else lead.setProdutos(21);
+        return lead;
+    }
+    
     public Lead motivoViagemTrabalho(Lead lead, Leadbot contato){
         int idPais = getPais(contato.getDestinotrabalho());
         if (idPais>0){
@@ -386,24 +403,6 @@ public class Capturar {
     }
     
     public Lead motivoViagemEstudoTrabalho(Lead lead, Leadbot contato){
-        int idPais = getPais(contato.getDestinotrabalho());
-        if (idPais>0){
-            lead.setPais(idPais);
-        }else lead.setPais(5);
-        if (contato.getCursos().equalsIgnoreCase("Au pair")){
-            lead.setProdutos(9);
-        }else if (contato.getCursos().equalsIgnoreCase("Work and Travel")){
-            lead.setProdutos(10);
-        }if (contato.getCursos().equalsIgnoreCase("Voluntariado")){
-            lead.setProdutos(16);
-        }else {
-            lead.setProdutos(21);
-        }
-        return lead;
-        
-    }
-    
-    public Lead motivoViagemEstudar(Lead lead, Leadbot contato){
         int idPais = getPais(contato.getDestinopaisesttrab());
         if (idPais>0){
             lead.setPais(idPais);
