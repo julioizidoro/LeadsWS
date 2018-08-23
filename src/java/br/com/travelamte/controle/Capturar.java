@@ -228,7 +228,7 @@ public class Capturar {
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
             }else {
-                lead = motivoViagemTrabalho(lead, contato);
+                lead = motivoViagemEstudoTrabalho(lead, contato);
             }
             lead.setNotas(contato.getDuvida());
             lead.setSituacao(1);
@@ -309,7 +309,7 @@ public class Capturar {
     public String formatTelefoneBot(String fone) {
         String novoFone="";
         if (fone.length()==14){
-            fone = fone.substring(0, 4);
+            novoFone = fone.substring(0, 4);
             novoFone = novoFone  + fone.substring(5, 14);
             return novoFone;
         }else if (fone.length()==15){
