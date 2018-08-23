@@ -227,7 +227,7 @@ public class Capturar {
                 lead = motivoViagemEstudar(lead, contato);
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
-            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Estudar e Trabalhar")){
+            }else {
                 lead = motivoViagemTrabalho(lead, contato);
             }
             lead.setNotas(contato.getDuvida());
@@ -382,7 +382,7 @@ public class Capturar {
     }
     
     public Lead motivoViagemEstudar(Lead lead, Leadbot contato){
-        int idPais = getPais(contato.getDestinotrabalho());
+        int idPais = getPais(contato.getPaisdestino());
         if (idPais>0){
             lead.setPais(idPais);
         }else lead.setPais(5);
@@ -403,11 +403,11 @@ public class Capturar {
         if (idPais>0){
             lead.setPais(idPais);
         }else lead.setPais(5);
-        if (contato.getCursos().equalsIgnoreCase("Au pair")){
+        if (contato.getTrabalho().equalsIgnoreCase("Au pair")){
             lead.setProdutos(9);
-        }else if (contato.getCursos().equalsIgnoreCase("Work and Travel")){
+        }else if (contato.getTrabalho().equalsIgnoreCase("Work and Travel")){
             lead.setProdutos(10);
-        }if (contato.getCursos().equalsIgnoreCase("Voluntariado")){
+        }if (contato.getTrabalho().equalsIgnoreCase("Voluntariado")){
             lead.setProdutos(16);
         }else {
             lead.setProdutos(21);
@@ -417,7 +417,7 @@ public class Capturar {
     }
     
     public Lead motivoViagemEstudoTrabalho(Lead lead, Leadbot contato){
-        int idPais = getPais(contato.getDestinopaisesttrab());
+        int idPais = getPais(contato.getDestinoestudotrabalho());
         if (idPais>0){
             lead.setPais(idPais);
         }else lead.setPais(5);
