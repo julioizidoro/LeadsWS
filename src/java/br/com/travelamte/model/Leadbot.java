@@ -19,8 +19,9 @@ public class Leadbot {
     private String motivodaviagem;
     private String cursos;
     private String paisdestino;
+    private String trabalho;
     private String duvida;
-    private String destinopaisesttrab;
+    private String destinoestudotrabalho;
     private String destinotrabalho;
     
 
@@ -99,13 +100,23 @@ public class Leadbot {
         this.duvida = duvida;
     }
 
-    public String getDestinopaisesttrab() {
-        return destinopaisesttrab;
+    public String getTrabalho() {
+        return trabalho;
     }
 
-    public void setDestinopaisesttrab(String destinopaisesttrab) {
-        this.destinopaisesttrab = destinopaisesttrab;
+    public void setTrabalho(String trabalho) {
+        this.trabalho = trabalho;
     }
+
+    public String getDestinoestudotrabalho() {
+        return destinoestudotrabalho;
+    }
+
+    public void setDestinoestudotrabalho(String destinoestudotrabalho) {
+        this.destinoestudotrabalho = destinoestudotrabalho;
+    }
+
+   
 
     public String getDestinotrabalho() {
         return destinotrabalho;

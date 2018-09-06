@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(br.com.travelamte.filter.CorsFilter.class);
         resources.add(br.com.travelamte.ws.LeadWS.class);
     }
     
