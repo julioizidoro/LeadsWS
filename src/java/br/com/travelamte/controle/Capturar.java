@@ -209,7 +209,7 @@ public class Capturar {
             carregarListaResponsavel(6);
         }
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato.getNome(), contato.getEmail(), contato.getTelefone(), 6, 13, "Bot");
+        Cliente cliente = salvarCliente(contato.getName(), contato.getEmail(), contato.getTelefone(), 6, 13, "Bot");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;

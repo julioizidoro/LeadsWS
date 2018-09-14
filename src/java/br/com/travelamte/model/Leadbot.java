@@ -11,7 +11,7 @@ package br.com.travelamte.model;
  */
 public class Leadbot {
     
-    private String nome;
+    private String name;
     private String email;
     private String telefone;
     private String unidadetravelmate;
@@ -19,22 +19,30 @@ public class Leadbot {
     private String motivodaviagem;
     private String cursos;
     private String paisdestino;
+    private String algumaduvida;
     private String trabalho;
     private String duvida;
     private String destinoestudotrabalho;
     private String destinotrabalho;
     
+     
+
+
+
+    
 
     public Leadbot() {
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    
 
     public String getEmail() {
         return email;
@@ -114,6 +122,14 @@ public class Leadbot {
 
     public void setDestinoestudotrabalho(String destinoestudotrabalho) {
         this.destinoestudotrabalho = destinoestudotrabalho;
+    }
+
+    public String getAlgumaduvida() {
+        return algumaduvida;
+    }
+
+    public void setAlgumaduvida(String algumaduvida) {
+        this.algumaduvida = algumaduvida;
     }
 
    
