@@ -227,10 +227,12 @@ public class Capturar {
                 lead = motivoViagemEstudar(lead, contato);
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
+            }else if (contato.getMotivodaviagem().equalsIgnoreCase("Tenho outras duvídas")){
+                lead = motivo
             }else {
                 lead = motivoViagemEstudoTrabalho(lead, contato);
             }
-            lead.setNotas(contato.getDuvida());
+            lead.setNotas(contato.getAlgumaduvida());
             lead.setSituacao(1);
             lead.setTipocontato(1);
             
@@ -404,24 +406,32 @@ public class Capturar {
         }
     }
     
-    public Lead motivoViagemTrabalho(Lead lead, Leadbot contato){
+    public Lead motivoViagemTrabalho(Lead lead, Leadbot contato) {
         int idPais = getPais(contato.getPaisdestino());
-        if (idPais>0){
+        if (idPais > 0) {
             lead.setPais(idPais);
-        }else lead.setPais(5);
-        if (contato.getTrabalho().equalsIgnoreCase("Au pair")){
-            lead.setProdutos(9);
-            return lead;
-        }else if (contato.getTrabalho().equalsIgnoreCase("Work & Travel")){
-            lead.setProdutos(10);
-            return lead;
-        }if (contato.getTrabalho().equalsIgnoreCase("Voluntariado")){
-            lead.setProdutos(16);
-            return lead;
-        }else {
+        } else {
+            lead.setPais(5);
+        }
+        if (contato.getTrabalho() != null) {
+            if (contato.getTrabalho().equalsIgnoreCase("Au pair")) {
+                lead.setProdutos(9);
+                return lead;
+            } else if (contato.getTrabalho().equalsIgnoreCase("Work & Travel")) {
+                lead.setProdutos(10);
+                return lead;
+            }
+            if (contato.getTrabalho().equalsIgnoreCase("Voluntariado")) {
+                lead.setProdutos(16);
+                return lead;
+            } else {
+                lead.setProdutos(21);
+                return lead;
+            }
+        } else {
             lead.setProdutos(21);
             return lead;
-        }        
+        }
     }
     
     public Lead motivoViagemEstudoTrabalho(Lead lead, Leadbot contato){
@@ -433,6 +443,8 @@ public class Capturar {
         return lead;
         
     }
+    
+    
     
     public int getPublicidade(String nome){
         PublicidadeFacade publicidadeFacade = new PublicidadeFacade();
