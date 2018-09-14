@@ -228,7 +228,7 @@ public class Capturar {
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Trabalhar")){
                 lead = motivoViagemTrabalho(lead, contato);
             }else if (contato.getMotivodaviagem().equalsIgnoreCase("Tenho outras duvídas")){
-                lead = motivo
+                lead = motivoViagemEstudoTrabalho(lead, contato);
             }else {
                 lead = motivoViagemEstudoTrabalho(lead, contato);
             }
