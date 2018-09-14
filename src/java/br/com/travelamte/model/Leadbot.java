@@ -22,7 +22,6 @@ public class Leadbot {
     private String algumaduvida;
     private String trabalho;
     private String duvida;
-    private String destinoestudotrabalho;
     private String destinotrabalho;
     
      
@@ -116,13 +115,6 @@ public class Leadbot {
         this.trabalho = trabalho;
     }
 
-    public String getDestinoestudotrabalho() {
-        return destinoestudotrabalho;
-    }
-
-    public void setDestinoestudotrabalho(String destinoestudotrabalho) {
-        this.destinoestudotrabalho = destinoestudotrabalho;
-    }
 
     public String getAlgumaduvida() {
         return algumaduvida;
