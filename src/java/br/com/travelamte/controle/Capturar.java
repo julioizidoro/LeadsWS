@@ -388,14 +388,20 @@ public class Capturar {
         }else lead.setPais(5);
         if (contato.getCursos().equalsIgnoreCase("Cursos de idioma")){
             lead.setProdutos(1);
+            return lead;
         }else if (contato.getCursos().equalsIgnoreCase("Férias Teen")){
             lead.setProdutos(5);
+            return lead;
         }if (contato.getCursos().equalsIgnoreCase("High School")){
             lead.setProdutos(4);
+            return lead;
         }else if (contato.getCursos().equalsIgnoreCase("Higher Education")){
             lead.setProdutos(22);
-        }else lead.setProdutos(21);
-        return lead;
+            return lead;
+        }else{
+            lead.setProdutos(21);
+            return lead;
+        }
     }
     
     public Lead motivoViagemTrabalho(Lead lead, Leadbot contato){
@@ -405,15 +411,17 @@ public class Capturar {
         }else lead.setPais(5);
         if (contato.getTrabalho().equalsIgnoreCase("Au pair")){
             lead.setProdutos(9);
+            return lead;
         }else if (contato.getTrabalho().equalsIgnoreCase("Work and Travel")){
             lead.setProdutos(10);
+            return lead;
         }if (contato.getTrabalho().equalsIgnoreCase("Voluntariado")){
             lead.setProdutos(16);
+            return lead;
         }else {
             lead.setProdutos(21);
-        }
-        return lead;
-        
+            return lead;
+        }        
     }
     
     public Lead motivoViagemEstudoTrabalho(Lead lead, Leadbot contato){
