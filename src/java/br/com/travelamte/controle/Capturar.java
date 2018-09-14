@@ -313,7 +313,7 @@ public class Capturar {
             novoFone = novoFone  + fone.substring(5, 14);
             return novoFone;
         }else if (fone.length()==15){
-            fone = fone.substring(0, 4);
+            novoFone = fone.substring(0, 4);
             novoFone = novoFone  + fone.substring(5, 15);
             return novoFone;   
         }
