@@ -23,6 +23,7 @@ public class Leadbot {
     private String trabalho;
     private String duvida;
     private String destinotrabalho;
+    private String duvidafim;
     
      
 
@@ -132,6 +133,14 @@ public class Leadbot {
 
     public void setDestinotrabalho(String destinotrabalho) {
         this.destinotrabalho = destinotrabalho;
+    }
+
+    public String getDuvidafim() {
+        return duvidafim;
+    }
+
+    public void setDuvidafim(String duvidafim) {
+        this.duvidafim = duvidafim;
     }
     
     

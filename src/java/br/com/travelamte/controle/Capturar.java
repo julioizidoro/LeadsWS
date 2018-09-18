@@ -27,6 +27,7 @@ import br.com.travelamte.model.Pais;
 import br.com.travelamte.model.Publicidade;
 import br.com.travelamte.model.Unidadenegocio;
 import br.com.travelamte.model.Usuario;
+import com.sun.accessibility.internal.resources.accessibility;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -194,6 +195,7 @@ public class Capturar {
     }
     
     public Lead salvarLeadBot(Leadbot contato){
+        int idpublicidade = getPublicidade(contato.getComoficousabendo());
         Unidadenegocio unidade = null;
         if (contato.getUnidadetravelmate()!=null){
             if (contato.getUnidadetravelmate().length()>0){
@@ -209,7 +211,7 @@ public class Capturar {
             carregarListaResponsavel(6);
         }
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato.getName(), contato.getEmail(), contato.getTelefone(), 6, 13, "Bot");
+        Cliente cliente = salvarCliente(contato.getName(), contato.getEmail(), contato.getTelefone(), unidade.getIdunidadeNegocio(), idpublicidade, "Bot");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
@@ -232,11 +234,18 @@ public class Capturar {
             }else {
                 lead = motivoViagemEstudoTrabalho(lead, contato);
             }
-            lead.setNotas(contato.getAlgumaduvida());
+            String notas = "";
+            if (contato.getAlgumaduvida().length()>0){
+                notas = notas + contato.getAlgumaduvida() + " ";
+            }
+            if (contato.getDuvidafim().length()>0){
+                notas = notas + contato.getDuvidafim() + " ";
+            }
+            lead.setNotas(notas);
             lead.setSituacao(1);
             lead.setTipocontato(1);
             
-            lead.setPublicidade(getPublicidade(contato.getComoficousabendo()));
+            lead.setPublicidade(idpublicidade);
             lead.setUnidadenegocio(unidade.getIdunidadeNegocio());
             lead.setMotivocancelamento1(1);
             lead.setDatarecebimento(new Date());
