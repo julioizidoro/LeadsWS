@@ -114,7 +114,7 @@ public class LeadWS {
             Gson gson = new Gson();
             Leadbot capturada = gson.fromJson(leadbot, Leadbot.class);
             Capturar capturar = new Capturar();
-            if (capturar==null){
+            if (capturar!=null){
             Lead lead = capturar.salvarLeadBot(capturada);
             if (lead == null) {
                 return Response.status(200).entity("ERRO").build();
