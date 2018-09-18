@@ -11,7 +11,6 @@ import br.com.travelamte.model.Lead;
 import br.com.travelamte.model.Leadblog;
 import br.com.travelamte.model.Leadbot;
 import br.com.travelamte.model.Leads;
-import br.com.travelamte.model.Retorno;
 import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -77,15 +76,17 @@ public class LeadWS {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("fc/")
     public Response capturarFC(String contato) {
+        if (contato!=null){
         Gson gson = new Gson();
-        Leads capturada = gson.fromJson(contato, Leads.class);
-        Capturar capturar = new Capturar();
-        capturar.salvarLeads(capturada);
-        if (capturada == null) {
-            return Response.status(200).entity("ERRO").build();
-        } else {
-            return Response.status(200).entity("OK").build();
-        }
+            Leads capturada = gson.fromJson(contato, Leads.class);
+            Capturar capturar = new Capturar();
+            capturar.salvarLeads(capturada);
+            if (capturada == null) {
+                return Response.status(200).entity("ERRO").build();
+            } else {
+                return Response.status(200).entity("OK").build();
+            }
+        }else return Response.status(200).entity("ERRO").build();
     }
 
     @POST
@@ -109,15 +110,22 @@ public class LeadWS {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bot/")
     public Response capturarBot(String leadbot) {
-        Gson gson = new Gson();
-        Leadbot capturada = gson.fromJson(leadbot, Leadbot.class);
-        Capturar capturar = new Capturar();
-
-        Lead lead = capturar.salvarLeadBot(capturada);
-        if (lead == null) {
-            return Response.status(200).entity("ERRO").build();
+        if (leadbot != null) {
+            Gson gson = new Gson();
+            Leadbot capturada = gson.fromJson(leadbot, Leadbot.class);
+            Capturar capturar = new Capturar();
+            if (capturar==null){
+            Lead lead = capturar.salvarLeadBot(capturada);
+            if (lead == null) {
+                return Response.status(200).entity("ERRO").build();
+            } else {
+                return Response.status(200).entity("OK").build();
+            }
+            }else {
+                  return Response.status(200).entity("LEAD NULO").build();
+            }
         } else {
-            return Response.status(200).entity("OK").build();
+            return Response.status(200).entity("JSON NULO").build();
         }
 
     }

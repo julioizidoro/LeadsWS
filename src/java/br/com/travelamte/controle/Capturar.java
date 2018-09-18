@@ -388,7 +388,7 @@ public class Capturar {
         if (idPais>0){
             lead.setPais(idPais);
         }else lead.setPais(5);
-        if (contato.getCursos().equalsIgnoreCase("Curso de idioma")){
+        if (contato.getCursos().equalsIgnoreCase("Curso de idiomas")){
             lead.setProdutos(1);
             return lead;
         }else if (contato.getCursos().equalsIgnoreCase("Férias Teen")){
