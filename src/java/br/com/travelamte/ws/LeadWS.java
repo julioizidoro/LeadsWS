@@ -129,5 +129,14 @@ public class LeadWS {
         }
 
     }
+    
+    @POST
+    //@Consumes(MediaType.APPLICATION_JSON)
+    @Path("excel/")
+    public Response capturarExcel() {
+        Capturar capturar = new Capturar();
+        String msg = capturar.salvarLeadExcel();
+        return Response.status(200).entity(msg).build();
+    }
 
 }

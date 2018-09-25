@@ -8,6 +8,7 @@ package br.com.travelamte.controle;
 import br.com.travelamte.facade.AvisosFacade;
 import br.com.travelamte.facade.ClienteFacade;
 import br.com.travelamte.facade.HistoricoFacade;
+import br.com.travelamte.facade.ImportleadFacade;
 import br.com.travelamte.facade.LeadFacade;
 import br.com.travelamte.facade.LeadResponsavelFacade;
 import br.com.travelamte.facade.PaisFacade;
@@ -17,6 +18,7 @@ import br.com.travelamte.facade.UsuarioFacade;
 import br.com.travelamte.model.Avisos;
 import br.com.travelamte.model.Avisousuario;
 import br.com.travelamte.model.Cliente;
+import br.com.travelamte.model.Importlead;
 import br.com.travelamte.model.Lead;
 import br.com.travelamte.model.Leadblog;
 import br.com.travelamte.model.Leadbot;
@@ -463,4 +465,66 @@ public class Capturar {
             return publicidade.getIdpublicidade();
         }else return 1;
     }
+    
+    public String salvarLeadExcel() {
+        ImportleadFacade importleadFacade = new ImportleadFacade();
+        List<Importlead> lista = importleadFacade.listar();
+        if (lista != null) {
+            for (int i = 0; i < lista.size(); i++) {
+                salvarLead(lista.get(i));
+                i=100000000;
+            }
+        }
+        return "Lista importada com sucesso";
+    }
+    
+    public void salvarLead(Importlead importe) {
+        carregarListaResponsavel(importe.getUnidade());
+        Unidadenegocio unidade = getUnidade(importe.getUnidade());
+        jaecliente = true;
+        String nome = importe.getNome() + " " + importe.getSobrenome();
+        Cliente cliente = salvarCliente(nome, importe.getEmail(), importe.getFone(), importe.getUnidade(), importe.getPublicidade(), "Feira");
+        Lead lead = new Lead();
+        LeadFacade leadFacede = new LeadFacade();
+        boolean lancarHistorico = false;
+        if (jaecliente) {
+            lead = leadFacede.getLead(cliente.getIdcliente());
+            lancarHistorico = true;
+        } else {
+            lead = null;
+        }
+        if (lead == null) {
+            lead = new Lead();
+            lead.setCliente(cliente.getIdcliente());
+            lead.setJaecliente(jaecliente);
+            lead.setNotas(importe.getNomeprograma() + " " + importe.getObservacao());
+            lead.setProdutos(importe.getPrograma());
+            lead.setSituacao(1);
+            lead.setTipocontato(1);
+            lead.setPais(5);
+            lead.setPublicidade(importe.getPublicidade());
+            lead.setUnidadenegocio(importe.getUnidade());
+            lead.setMotivocancelamento1(1);
+            lead.setDatarecebimento(new Date());
+            lead.setHorarecebimento(formatarHoraString());
+            lead.setUrlclient("Feira Setembro de 2018");
+            int idUsuario = 0;
+            if (unidade.isLeadautomatica()) {
+                idUsuario = getUsuario(unidade);
+                lead.setUsuario(idUsuario);
+                lead.setDataenvio(new Date());
+            } else {
+                if (listaLeadResponsavel != null) {
+                    lead.setUsuario(listaLeadResponsavel.get(0).getUsuario());
+                }
+            }
+            lead.setIdcontrole(0);
+            lead = leadFacede.salvar(lead);
+            listaResponsavelUnidade(unidade.getIdunidadeNegocio(), idUsuario, cliente);
+        } else if (lancarHistorico) {
+            lancarHistoricoLead(lead, "Paulista");
+        }
+
+    }
+
 }
