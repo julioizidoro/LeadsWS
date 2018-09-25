@@ -338,12 +338,12 @@ public class Capturar {
     public String formatTelefoneExcel(String fone) {
         String novoFone="(";
         if (fone.length()==16){
-            novoFone = fone.substring(4, 6) + ")";
-            novoFone = novoFone  + fone.substring(7, 15);
+            novoFone = novoFone + fone.substring(4, 6) + ")";
+            novoFone = novoFone  + fone.substring(7, 16);
             return novoFone;
         }else if (fone.length()==17){
-            novoFone = fone.substring(4, 6) + ")";
-            novoFone = novoFone  + fone.substring(7, 16);
+            novoFone = novoFone + fone.substring(4, 6) + ")";
+            novoFone = novoFone  + fone.substring(7, 17);
             return novoFone;   
         }
         return "(00)00000-0000";
@@ -488,7 +488,6 @@ public class Capturar {
         if (lista != null) {
             for (int i = 0; i < lista.size(); i++) {
                 salvarLead(lista.get(i));
-                i=100000000;
             }
         }
         return "Lista importada com sucesso";
@@ -513,7 +512,10 @@ public class Capturar {
             lead = new Lead();
             lead.setCliente(cliente.getIdcliente());
             lead.setJaecliente(jaecliente);
-            lead.setNotas(importe.getNomeprograma() + " " + importe.getObservacao());
+            lead.setNotas(importe.getNomeprograma());
+             if (importe.getObservacao()!= null) {
+                 lead.setNotas(lead.getNotas() +  " " + importe.getObservacao()); 
+             }
             lead.setProdutos(importe.getPrograma());
             lead.setSituacao(1);
             lead.setTipocontato(1);
