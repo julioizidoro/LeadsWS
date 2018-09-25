@@ -280,6 +280,8 @@ public class Capturar {
                 cliente.setFoneCelular(formatTelefoneBlog(telefone));
             }else if (tipoFone.equalsIgnoreCase("Bot")){
                 cliente.setFoneCelular(formatTelefoneBot(telefone));
+            }else if (tipoFone.equalsIgnoreCase("Excel")){
+                cliente.setFoneCelular(formatTelefoneExcel(telefone));
             }
             
             cliente.setTipoCliente("FollowUp");
@@ -328,6 +330,20 @@ public class Capturar {
         }else if (fone.length()==15){
             novoFone = fone.substring(0, 4);
             novoFone = novoFone  + fone.substring(5, 15);
+            return novoFone;   
+        }
+        return "(00)00000-0000";
+    }
+    
+    public String formatTelefoneExcel(String fone) {
+        String novoFone="(";
+        if (fone.length()==16){
+            novoFone = fone.substring(4, 6) + ")";
+            novoFone = novoFone  + fone.substring(7, 15);
+            return novoFone;
+        }else if (fone.length()==17){
+            novoFone = fone.substring(4, 6) + ")";
+            novoFone = novoFone  + fone.substring(7, 16);
             return novoFone;   
         }
         return "(00)00000-0000";
@@ -483,7 +499,7 @@ public class Capturar {
         Unidadenegocio unidade = getUnidade(importe.getUnidade());
         jaecliente = true;
         String nome = importe.getNome() + " " + importe.getSobrenome();
-        Cliente cliente = salvarCliente(nome, importe.getEmail(), importe.getFone(), importe.getUnidade(), importe.getPublicidade(), "Feira");
+        Cliente cliente = salvarCliente(nome, importe.getEmail(), importe.getFone(), importe.getUnidade(), importe.getPublicidade(), "Excel");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
