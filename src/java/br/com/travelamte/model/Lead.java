@@ -79,10 +79,13 @@ public class Lead implements Serializable {
     private Date datarecebimento;
     @Column(name = "Urlclient")
     private String Urlclient;
+    @Column(name = "captacao")
+    private String captacao;
     
 
     public Lead() {
         idcontrole = 0;
+        captacao = " ";
     }
 
     public Integer getIdlead() {
@@ -259,6 +262,14 @@ public class Lead implements Serializable {
 
     public void setUrlclient(String Urlclient) {
         this.Urlclient = Urlclient;
+    }
+
+    public String getCaptacao() {
+        return captacao;
+    }
+
+    public void setCaptacao(String captacao) {
+        this.captacao = captacao;
     }
 
     @Override

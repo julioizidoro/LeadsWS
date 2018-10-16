@@ -114,6 +114,7 @@ public class Capturar {
             lead.setTipocontato(1);
             lead.setPais(5);
             lead.setPublicidade(11);
+            lead.setCaptacao("Fale conosco/Site");
             lead.setUnidadenegocio(contato.getUnidade());
             lead.setMotivocancelamento1(1);
             lead.setDatarecebimento(new Date());
@@ -179,6 +180,7 @@ public class Capturar {
             lead.setTipocontato(1);
             lead.setPais(5);
             lead.setPublicidade(13);
+            lead.setCaptacao("Intercâmbio e Viagem");
             lead.setUnidadenegocio(6);
             lead.setMotivocancelamento1(1);
             lead.setDatarecebimento(new Date());
@@ -246,7 +248,7 @@ public class Capturar {
             lead.setNotas(notas);
             lead.setSituacao(1);
             lead.setTipocontato(1);
-            
+            lead.setCaptacao("Chatbot");
             lead.setPublicidade(idpublicidade);
             lead.setUnidadenegocio(unidade.getIdunidadeNegocio());
             lead.setMotivocancelamento1(1);
