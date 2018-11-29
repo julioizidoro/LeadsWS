@@ -66,7 +66,7 @@ public class Capturar {
     public int getUsuario(Unidadenegocio unidade) {
         UsuarioFacade usuarioFacade = new UsuarioFacade();
         int idUsuario = 0;
-        List<Usuario> listaUsuairo = usuarioFacade.consultar(unidade.getIdunidadeNegocio());
+        List<Usuario> listaUsuairo = usuarioFacade.consultar(unidade.getIdws());
         if (listaUsuairo != null) {
             int contador = 0;
             idUsuario = unidade.getUsuarioleadautomatica();
@@ -132,7 +132,7 @@ public class Capturar {
             }
             lead.setIdcontrole(contato.getId());
             lead = leadFacede.salvar(lead);
-            listaResponsavelUnidade(unidade.getIdunidadeNegocio(), idUsuario, cliente);
+            listaResponsavelUnidade(unidade.getIdws(), idUsuario, cliente);
         }else if (lancarHistorico){
             lancarHistoricoLead(lead, contato.getUnidade_desc());
         }       
@@ -208,14 +208,14 @@ public class Capturar {
             }
         }
         if (unidade!=null){
-            carregarListaResponsavel(unidade.getIdunidadeNegocio());
+            carregarListaResponsavel(unidade.getIdws());
         }else {
             UnidadeFacade unidadeFacade = new UnidadeFacade();
             unidade = unidadeFacade.getUnidade(6);
             carregarListaResponsavel(6);
         }
         jaecliente = true;
-        Cliente cliente = salvarCliente(contato.getName(), contato.getEmail(), contato.getTelefone(), unidade.getIdunidadeNegocio(), idpublicidade, "Bot");
+        Cliente cliente = salvarCliente(contato.getName(), contato.getEmail(), contato.getTelefone(), unidade.getIdws(), idpublicidade, "Bot");
         Lead lead = new Lead();
         LeadFacade leadFacede = new LeadFacade();
         boolean lancarHistorico = false;
@@ -250,7 +250,7 @@ public class Capturar {
             lead.setTipocontato(1);
             lead.setCaptacao("Chatbot");
             lead.setPublicidade(idpublicidade);
-            lead.setUnidadenegocio(unidade.getIdunidadeNegocio());
+            lead.setUnidadenegocio(unidade.getIdws());
             lead.setMotivocancelamento1(1);
             lead.setDatarecebimento(new Date());
             lead.setHorarecebimento(formatarHoraString());
@@ -260,7 +260,7 @@ public class Capturar {
             }
             lead.setIdcontrole(0);
             lead = leadFacede.salvar(lead);
-            listaResponsavelUnidade(unidade.getIdunidadeNegocio(), 0, cliente);
+            listaResponsavelUnidade(unidade.getIdws(), 0, cliente);
         }else if (lancarHistorico){
             lancarHistoricoLead(lead, contato.getUnidadetravelmate());
         }    
@@ -540,7 +540,7 @@ public class Capturar {
             }
             lead.setIdcontrole(0);
             lead = leadFacede.salvar(lead);
-            listaResponsavelUnidade(unidade.getIdunidadeNegocio(), idUsuario, cliente);
+            listaResponsavelUnidade(unidade.getIdws(), idUsuario, cliente);
         } else if (lancarHistorico) {
             lancarHistoricoLead(lead, "Paulista");
         }

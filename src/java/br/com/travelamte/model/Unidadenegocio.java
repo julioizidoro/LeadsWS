@@ -41,6 +41,8 @@ public class Unidadenegocio implements Serializable {
     private boolean situacao;
     @Column(name = "nomews")
     private String nomews;
+    @Column(name = "idws")
+    private Integer idws;
     
     
     
@@ -56,6 +58,8 @@ public class Unidadenegocio implements Serializable {
     public void setIdunidadeNegocio(Integer idunidadeNegocio) {
         this.idunidadeNegocio = idunidadeNegocio;
     }
+
+    
 
     public String getRazaoSocial() {
         return razaoSocial;
@@ -103,6 +107,14 @@ public class Unidadenegocio implements Serializable {
 
     public void setNomews(String nomews) {
         this.nomews = nomews;
+    }
+
+    public Integer getIdws() {
+        return idws;
+    }
+
+    public void setIdws(Integer idws) {
+        this.idws = idws;
     }
 
    
